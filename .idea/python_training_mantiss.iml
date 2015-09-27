@@ -5,4 +5,8 @@
     <orderEntry type="jdk" jdkName="Python 3.4.3 virtualenv at C:\python_training_mantiss\env" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="TestRunnerService">
+    <option name="projectConfiguration" value="py.test" />
+    <option name="PROJECT_TEST_RUNNER" value="py.test" />
+  </component>
 </module>
