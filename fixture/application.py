@@ -3,10 +3,11 @@ __author__ = '1'
 from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.project import ProjectHelper
+from fixture.james import JamesHelper
 
 class Application:
 
-    def __init__(self, browser, baseUrl):
+    def __init__(self, browser, config):
         if browser == "firefox":
             self.wd = webdriver.Firefox()
         elif browser == "chrome":
@@ -17,7 +18,9 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
         self.session = SessionHelper(self)
         self.project = ProjectHelper(self)
-        self.baseUrl = baseUrl
+        self.james = JamesHelper(self)
+        self.config = config
+        self.baseUrl = config["web"]["baseUrl"]
 
     def open_home_page(self):
         wd = self.wd
