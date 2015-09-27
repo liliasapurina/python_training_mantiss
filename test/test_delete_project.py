@@ -1,15 +1,17 @@
 __author__ = '1'
 
-# -*- coding: utf-8 -*-
-from model.group import Group
+from model.project import Project
+from random import randrange
 
+def test_delete_some_project(app):
+    app.session.login("administrator","root")
+    old_projects = app.project.get_project_list()
+    if app.project.count() == 0:
+        app.project.create(Project(name="My project",description="My project description"))
+    old_projects = app.project.get_project_list()
+    index = 1
+    while (index == 1 | index == 2):
+        index = randrange(len(old_projects))
+    app.project.delete_project_by_index(index)
+    assert len(old_projects) - 1 == app.project.count()
 
-def test_add_project(app, db, json_groups, check_ui):
-    current_group = json_groups
-    old_groups = db.get_group_list()
-    app.group.create(current_group)
-    new_groups = db.get_group_list()
-    old_groups.append(current_group)
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-    if check_ui:
-        assert sorted(new_groups, key = Group.id_or_max) == sorted(app.group.get_group_list(), key = Group.id_or_max)

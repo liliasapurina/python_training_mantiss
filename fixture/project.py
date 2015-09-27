@@ -35,10 +35,26 @@ class ProjectHelper:
         self.open_projects_page()
         projects = []
         for element in wd.find_elements_by_xpath("/html/body/table[3]/tbody/tr"):
-            # TODO
             text = element.text
             id = element.get_attribute("value")
-            # TODO
             projects.append(Project(name=text,id=id))
         return projects
 
+    def select_project_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_xpath("/html/body/table[3]/tbody/tr/td[1]/a")[index].click()
+
+    def delete_project_by_index(self, index):
+        wd = self.app.wd
+        # open groups page
+        self.open_projects_page()
+        self.select_project_by_index(index)
+        # submit deletion
+        wd.find_element_by_css_selector("body > div.border.center > form > input.button").click()
+        # answer on second question about deleting
+        wd.find_element_by_css_selector("body > div:nth-child(5) > form > input.button").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_projects_page()
+        return len(wd.find_elements_by_xpath("/html/body/table[3]/tbody/tr"))
